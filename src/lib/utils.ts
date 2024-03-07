@@ -1,5 +1,8 @@
+import imageUrlBuilder from '@sanity/image-url'
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { client } from "../../sanity/lib/client";
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -21,4 +24,9 @@ export function formatPrice(
     notation,
     maximumFractionDigits: 2
   }).format(numericPrice);
+}
+
+export function formatImageURL(source: SanityImageSource): string {
+  const builder = imageUrlBuilder(client);
+  return builder.image(source).url()
 }

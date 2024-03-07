@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import MaxWidthWrapper from "../shared/MaxWidthWrapper";
 import { Icons } from "../shared/Icons";
@@ -5,8 +6,9 @@ import NavItems from "./NavItems";
 import { buttonVariants } from "../ui/button";
 import Cart from "./Cart";
 import UserAccountNav from "./UserAccountNav";
+import { useClient } from "sanity";
 
-const Navbar = async () => {
+const Navbar = () => {
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -14,7 +16,6 @@ const Navbar = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              {/* TODO: mobile nav */}
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
                   <Icons.logo className="h-10 w-10" />
