@@ -3,6 +3,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from 'sonner';
 import TanstackProvider from "../../providers/TanstackProvider";
+import Navbar from "@/components/website/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -10,6 +11,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     	<html lang="en" className="h-full">
       		<body className={ cn("relative h-full font-sans antialiased", inter.className) }>
 				<TanstackProvider>
+					<Navbar />
 					<main className="relative flex flex-col min-h-screen">
 						{children}
 					</main>

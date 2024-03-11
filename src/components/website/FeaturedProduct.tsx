@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { formatImageURL, formatPrice } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 const FeatureProduct = ({ product }: { product : any}) => {
     return (
         <div className="w-auto bg-white shadow-xl rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-            <a href="#">
+            <Link href={`/products/${product.category_slug}/${product.subcategory_slug}/${product.slug.current}`}>
                 <Image src={formatImageURL(product.gallery?.images[0])} width={300} height={500} alt="Product" className="h-80 w-auto object-cover rounded-t-xl" />
                 <div className="px-4 py-3 w-auto">
                     <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
@@ -23,7 +24,7 @@ const FeatureProduct = ({ product }: { product : any}) => {
                         </svg></div>
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     )
 }
