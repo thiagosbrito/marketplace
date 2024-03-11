@@ -15,10 +15,10 @@ export function formatPrice(
     notation?: Intl.NumberFormatOptions["notation"]
   } = {}
 ) {
-  const {currency = "BRL", notation = "compact"} = options;
+  const {currency = "BRL", notation = "standard"} = options;
 
   const numericPrice = typeof price === 'string' ? parseFloat(price) : price;
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency,
     notation,

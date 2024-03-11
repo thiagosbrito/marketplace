@@ -127,6 +127,11 @@ export const ProductSchema: SchemaTypeDefinition ={
                 },
             },
         ],
+    },
+    {
+        name: 'highlighted',
+        title: 'Is a highlighted product?',
+        type: 'boolean',
     }
   ],
 }
