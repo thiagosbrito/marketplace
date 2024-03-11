@@ -19,5 +19,5 @@ const authoptions = {
  })
 };
 
-const {handler, auth} = NextAuth(authoptions);
-export { handler as GET, handler as POST, auth };
+const {handler} = NextAuth(authoptions);
+export { handler as GET, handler as POST};
