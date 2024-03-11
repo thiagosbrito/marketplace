@@ -1,61 +1,54 @@
-'use client';
+"use client"
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/lib/validators/account-credentials-validator";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import { useRouter } from "next/navigation";
+import { ZodError } from "zod";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Icons } from "@/components/shared/Icons";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/config";
-interface FirebaseError {
-  code: number;
-  errors: Array<{
-    domain: string;
-    message: string;
-    reason: string;
-  }>;
-  message: string;
-}
+import signUp from "@/firebase/auth/signup";
+// import signIn from "@/firebase/auth/signIn";
+// import signUp from "@/firebase/auth/signUp";
 
 const Page = () => {
 
-  const router = useRouter();
+    const router = useRouter();
 
-  const { 
-      register,
-      handleSubmit,
-      formState: { errors } 
-  } = useForm<TAuthCredentialsValidator>({
-      resolver: zodResolver(AuthCredentialsValidator)
-  })
+    const { 
+        register,
+        handleSubmit,
+        formState: { errors } 
+    } = useForm<TAuthCredentialsValidator>({
+        resolver: zodResolver(AuthCredentialsValidator)
+    })
 
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
-  const onSubmit = async ({email, password}: TAuthCredentialsValidator) => {
-    
-      const user = await signInWithEmailAndPassword(email, password);
-      if (user) {
-        toast.success('User signed in successfully');
-        return router.push('/');
-      }
-      toast.error('Ocorreu um problema durante o login, confira suas credenciais e tente novamente');
-  }
+    const onSubmit = async ({email, password}: TAuthCredentialsValidator) => {
+        const { result, error } = await signUp(email, password);
+        if (error) {
+            // toast.error({message: error.message });
+            return;
+        }
+        toast.success('User regisered successfully');
+        return router.push('/sign-in');
+    }
 
   return <>
     <div className="container relative flex pt-20 flex-col item-center lg:px-0">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col items-center space-y-2 text-center">
           <Icons.logo className="h-20 w-20"></Icons.logo>
-          <h1 className="text-2xl font-bold">Sign in to your account</h1>
+          <h1 className="text-2xl font-bold">Create your account</h1>
           <Link className={buttonVariants({
             variant: 'link',
             className: 'gap-1.5'
-          })} href="/sign-up">Don&apos;t have an account? Sign-up <ArrowRight className="h-4 w-4" /></Link>
+          })} href="/sign-in">Already have an account? Sign-in <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className='grid gap-6'>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +83,7 @@ const Page = () => {
                     </p>
                   )}
               </div>
-              <Button>Sign in</Button>
+              <Button>Sign Up</Button>
 
             </div>
           </form>
@@ -106,6 +99,7 @@ const Page = () => {
               </span>
             </div>
           </div>
+		      <Button variant='secondary'>Login with Google</Button>
         </div>
       </div>
     </div>
