@@ -12,7 +12,8 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/shared/Icons";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/config";
+import { app, auth } from "@/config";
+import { getFirestore } from "firebase/firestore";
 interface FirebaseError {
   code: number;
   errors: Array<{
@@ -24,7 +25,6 @@ interface FirebaseError {
 }
 
 const Page = () => {
-
   const router = useRouter();
 
   const { 
