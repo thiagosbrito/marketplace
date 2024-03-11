@@ -12,7 +12,6 @@ export const ProviderSchema: SchemaTypeDefinition ={
       to: [{ type: 'users', title: 'User' }],
       description: 'The user that is a provider',
       validation: Rule => Rule.custom((user, context) => {
-        console.log(user);
         return true;
       })
     },

@@ -9,42 +9,35 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import { useRouter } from "next/navigation";
+import { ZodError } from "zod";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Icons } from "@/components/shared/Icons";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/config";
-interface FirebaseError {
-  code: number;
-  errors: Array<{
-    domain: string;
-    message: string;
-    reason: string;
-  }>;
-  message: string;
-}
+// import signIn from "@/firebase/auth/signIn";
 
 const Page = () => {
 
-  const router = useRouter();
+    const router = useRouter();
 
-  const { 
-      register,
-      handleSubmit,
-      formState: { errors } 
-  } = useForm<TAuthCredentialsValidator>({
-      resolver: zodResolver(AuthCredentialsValidator)
-  })
+    const { 
+        register,
+        handleSubmit,
+        formState: { errors } 
+    } = useForm<TAuthCredentialsValidator>({
+        resolver: zodResolver(AuthCredentialsValidator)
+    })
 
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
-  const onSubmit = async ({email, password}: TAuthCredentialsValidator) => {
-    
-      const user = await signInWithEmailAndPassword(email, password);
-      if (user) {
-        toast.success('User signed in successfully');
-        return router.push('/');
-      }
-      toast.error('Ocorreu um problema durante o login, confira suas credenciais e tente novamente');
-  }
+    const onSubmit = async ({email, password}: TAuthCredentialsValidator) => {
+
+      console.log('try to sign in')
+    // send data to server
+        // const { result, error } = await signIn(email, password);
+
+        // if (error) {
+        //     console.error(error);
+        //     return;
+        // }
+        // return router.push('/');
+    }
 
   return <>
     <div className="container relative flex pt-20 flex-col item-center lg:px-0">

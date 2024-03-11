@@ -1,7 +1,10 @@
+'use client';
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { CalendarClock, CheckCircle, Leaf } from 'lucide-react';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/config";
 
 const perks = [
   { 
@@ -21,6 +24,9 @@ const perks = [
   }
 ]
 export default function Home() {
+  
+  const [user] = useAuthState(auth);
+
   return (
     <>
       <MaxWidthWrapper className="bg-[url('../../public/images/wave.png')] bg-cover px-0 max-w-screen-3xl mx-auto">
