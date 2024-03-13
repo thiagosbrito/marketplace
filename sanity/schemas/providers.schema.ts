@@ -34,7 +34,11 @@ export const ProviderSchema: SchemaTypeDefinition ={
       name: 'socialMedia',
       title: 'Social Media',
       type: 'array',
-      of: [{type: 'url'}],
+      of: [{
+        name: 'socialMedia',
+        title: 'Social Media',
+        type: 'url'
+      }],
     },
     {
       name: 'legalNumbers',
