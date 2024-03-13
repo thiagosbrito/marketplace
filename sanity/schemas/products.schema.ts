@@ -24,6 +24,12 @@ export const ProductSchema: SchemaTypeDefinition ={
         type: 'text',
     },
     {
+      name: 'provider',
+      title: 'Provider',
+      type: 'reference',
+      to: [{ type: 'provider' }] // replace 'provider' with the actual type of your provider document
+    },
+    {
         name: 'price',
         title: 'Price',
         type: 'number',
