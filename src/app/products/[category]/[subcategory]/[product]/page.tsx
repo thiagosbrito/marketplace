@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const ProductDetailsPage = () => {
     const productSlug = useParams().product as string;
-    const [productDetails, setProductDetails] = useState(null);
+    const [productDetails, setProductDetails] = useState<any | null>(null);
     
     const { data, isLoading, isError, isSuccess } = useQuery({
         queryKey: ["product-details", productSlug],
