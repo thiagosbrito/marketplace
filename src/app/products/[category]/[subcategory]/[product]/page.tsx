@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { client } from "../../../../../../sanity/lib/client";
 import { useParams } from "next/navigation";
 import { PRODUCT_DETAILS } from "@/queries";
-import Image from "next/image";
-import { formatImageURL, formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import Breadcrumbs from "@/components/website/Breadcrumbs";
 import ProductImageCarousel from "@/components/website/ProductImageCarousel";
-import Markdown from "react-markdown";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -84,7 +82,7 @@ const ProductDetailsPage = () => {
                             </div>
                         </div>
                         <div className="text-gray-500">
-                            <Markdown>{productDetails.description}</Markdown>
+                            {productDetails.description}
                         </div>
                         <div className="flex py-4 space-x-4">
                             <div className="relative">
