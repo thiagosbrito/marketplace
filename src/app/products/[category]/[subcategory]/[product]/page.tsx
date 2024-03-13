@@ -3,17 +3,21 @@ import { useEffect, useState } from "react";
 import { client } from "../../../../../../sanity/lib/client";
 import { useParams } from "next/navigation";
 import { PRODUCT_DETAILS } from "@/queries";
-import Image from "next/image";
-import { formatImageURL, formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import Breadcrumbs from "@/components/website/Breadcrumbs";
 import ProductImageCarousel from "@/components/website/ProductImageCarousel";
-import Markdown from "react-markdown";
 import { useQuery } from "@tanstack/react-query";
 
 
 const ProductDetailsPage = () => {
     const productSlug = useParams().product as string;
-    const [productDetails, setProductDetails] = useState<any | null>(null);
+    const [productDetails, setProductDetails] = useState<{
+        name: string;
+        price: number;
+        description: string;
+        provider_name: string;
+        gallery: any;
+    } | null>(null);
     
     const { data, isLoading, isError, isSuccess } = useQuery({
         queryKey: ["product-details", productSlug],
@@ -39,6 +43,7 @@ const ProductDetailsPage = () => {
     //     }
     // }, [productSlug]);
     if (isLoading) return <p>Loading...</p>;
+    if (productDetails === null) return <p>Product not found</p>;
     return (
         <div className="py-6">
             <Breadcrumbs
@@ -52,23 +57,23 @@ const ProductDetailsPage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
                 <div className="flex flex-col md:flex-row -mx-4">
                     <div className="md:flex-1 px-4">
-                        <ProductImageCarousel gallery={productDetails?.gallery} />
+                        <ProductImageCarousel gallery={productDetails.gallery} />
                     </div>
                     <div className="md:flex-1 px-4">
                         <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                            {productDetails?.name}
+                            {productDetails.name}
                         </h2>
                         <p className="text-gray-500 text-sm">
                             By{" "}
                             <a href="#" className="text-indigo-600 hover:underline">
-                                {productDetails?.provider_name}
+                                {productDetails.provider_name}
                             </a>
                         </p>
                         <div className="flex items-center space-x-4 my-4">
                             <div>
                                 <div className="rounded-lg bg-gray-100 flex py-2 px-3">
                                     <span className="text-indigo-400 mr-1 mt-1">R$</span>
-                                    <span className="font-bold text-indigo-600 text-3xl">{formatPrice(productDetails?.price).replace('R$', '')}</span>
+                                    <span className="font-bold text-indigo-600 text-3xl">{formatPrice(productDetails.price).replace('R$', '')}</span>
                                 </div>
                             </div>
                             <div className="flex-1">
@@ -77,7 +82,7 @@ const ProductDetailsPage = () => {
                             </div>
                         </div>
                         <div className="text-gray-500">
-                            <Markdown>{productDetails?.description}</Markdown>
+                            {productDetails.description}
                         </div>
                         <div className="flex py-4 space-x-4">
                             <div className="relative">
