@@ -30,8 +30,8 @@ const ProductImageCarousel = ({ gallery }: {gallery: any}) => {
 
     return (
         <>
-            <div className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 shadow-lg">
-                <div className="h-full w-full relative md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+            <div className="aspect-video rounded-lg bg-gray-100 mb-4 shadow-lg">
+                <div className="h-full w-full relative rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                     {!activeImage ? 
                         <p>Loading...</p> : 
                         <Image

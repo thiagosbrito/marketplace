@@ -20,7 +20,7 @@ const Breadcrumbs = ({homeElement, separator, containerClasses, listClasses, act
     const pathNames = paths.split('/').filter( path => path )
 
     return (
-        <div>
+        <div className='bg-gradient-to-r rounded-lg p-2 from-slate-50 to-white'>
             <ul className={containerClasses}>
                 <li className={listClasses}><Link href={'/'}>{homeElement}</Link></li>
                 {pathNames.length > 0 && separator}
