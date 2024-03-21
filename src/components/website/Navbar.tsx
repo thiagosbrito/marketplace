@@ -9,21 +9,22 @@ import Cart from "./Cart";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config";
 import UserAccountNav from "./UserAccountNav";
-import Breadcrumbs from "./Breadcrumbs";
-import { ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
+// import Breadcrumb from "../dashboard/Breadcrumb";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
   const location = usePathname();
 
+  console.log(location);
+
   return (
     <>
-      <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
+      <div className="bg-white sticky z-50 top-0 inset-x-0 h-24">
         <header className="relative bg-white">
           <MaxWidthWrapper>
             <div className="border-b border-gray-200">
-              <div className="flex h-16 items-center">
+              <div className="flex h-24 items-center">
                 <div className="ml-4 flex lg:ml-0">
                   <Link href="/">
                     <Icons.logo className="h-10 w-10" />
@@ -58,20 +59,13 @@ const Navbar = () => {
           </MaxWidthWrapper>
         </header>
       </div>
-      { 
+      {/* { 
         ['/', '/sign-in', '/sign-up', '/verify-email'].includes(location) ? 
           null :
           <div className="max-w-7xl my-4 mx-auto px-4 sm:px-6 lg:px-8">
-            <Breadcrumbs
-              homeElement={'Home'}
-              separator={<li><ChevronRight className="w-4 h-4 text-muted-foreground" /></li>}
-              activeClasses='text-muted-foreground font-semibold'
-              containerClasses='flex shadow-lg items-center justify-start p-2 rounded-lg text-sm bg-gradient-to-l from-slate-50 to-white' 
-              listClasses='hover:underline mx-2 text-xs'
-              capitalizeLinks
-            />
+              <Breadcrumb pageName="Dashboard" />
           </div> 
-      }
+      } */}
     </>
   )
 }
