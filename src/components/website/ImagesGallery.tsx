@@ -1,4 +1,4 @@
-const ImagesGallery = ({ gallery }: {gallery: SanityI}) => {
+const ImagesGallery = ({ gallery }: {gallery: any}) => {
     return (
         <div className="w-full min-h-[600px] flex grid-cols-2 gap-2">
             <div className="w-6/12 h-full">
