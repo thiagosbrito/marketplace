@@ -21,8 +21,7 @@ export const ProductSchema: SchemaTypeDefinition ={
     {
         title: 'Description', 
         name: 'description',
-        type: 'array', 
-        of: [{type: 'block'}]
+        type: 'text'
     },
     {
       name: 'provider',

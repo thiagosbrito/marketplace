@@ -10,6 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config";
 import UserAccountNav from "./UserAccountNav";
 import { usePathname } from "next/navigation";
+import { LogIn, UserPlus2 } from "lucide-react";
 // import Breadcrumb from "../dashboard/Breadcrumb";
 
 const Navbar = () => {
@@ -32,26 +33,51 @@ const Navbar = () => {
                 </div>
 
                 <div className="hidden z-50 lg:ml-8 lg:block lg:self-stretch">
-                  <NavItems />
+                  {['/sign-in', '/sign-up', '/verify-email'].includes(location) ? null : <NavItems />}
+                  {/* <NavItems /> */}
                 </div>
 
                 <div className="ml-auto flex items-center">
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     {user ? null : (
-                      <Link href="/sign-in" className={buttonVariants({variant: 'ghost'})}>Sign In</Link>
+                      <>
+                      
+                        {['/sign-in'].includes(location) ? <Link href="/sign-up" className={buttonVariants({variant: 'ghost', className: 'text-lg antialiased flex gap-2'})}>
+                          <LogIn className="h-5 w-5" />
+                          <span>Sign Up</span>
+                        </Link> : null}
+
+                        {['/sign-up'].includes(location) ? <Link href="/sign-in" className={buttonVariants({variant: 'ghost', className: 'text-lg antialiased flex gap-2'})}>
+                          <LogIn className="h-5 w-5" />
+                          <span>Sign In</span>
+                        </Link> : null}
+                      
+                      </>
+
+
                     )}
                     {user ? null : (
                       <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     )}
-                    {user ? <UserAccountNav /> : <Link href="/sign-up" className={buttonVariants({variant: 'ghost'})}>Create account</Link>}
+                    {user ? <UserAccountNav /> : (
+                      <>
+                        {['/', '/sign-in', '/sign-up', '/verify-email'].includes(location) ? null : (
+                          <Link href="/sign-up" className={buttonVariants({variant: 'ghost', className: 'text-lg antialiased flex gap-2'})}>
+                            <UserPlus2 className="h-5 w-5" />
+                            <span>Create account</span>
+                          </Link>
+                        )}
+                      </>
+                    )}
                     {user ? <span className="h-6 w-px bg-gray-200" aria-hidden="true" /> : null}
                     {user ? null : 
                       <div className="flex lg:ml-6">
                         <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                       </div>}
-                      <div className="mll-4 flow-root lg:ml-6">
+                      {['/sign-in', '/sign-up', '/verify-email'].includes(location) ? null : <div className="mll-4 flow-root lg:ml-6">
                         <Cart />
-                      </div>
+                      </div>}
+                      
                   </div>
                 </div>
               </div>
