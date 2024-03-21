@@ -7,15 +7,18 @@ import Link from "next/link";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config";
 import { useRouter } from 'next/navigation';
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 
 const UserAccountNav = () => {
     const [ user ] = useAuthState(auth);
     const router = useRouter();
-    const logout = () => {
-        signOut(auth);
-        sessionStorage.removeItem('user_session');
-        router.push('/sign-in');
+    const [signOut, loading, error] = useSignOut(auth);
+    const logout = async () => {
+        const success = await signOut();
+        if (success) {
+            sessionStorage.removeItem('user_session');
+            router.push('/sign-in');
+        }
     }
     
     return(

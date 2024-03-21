@@ -7,8 +7,9 @@ import { formatPrice } from "@/lib/utils";
 import ProductImageCarousel from "@/components/website/ProductImageCarousel";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, Star, HelpCircle } from "lucide-react";
+import { Info, Star, HelpCircle, CalendarPlusIcon, CameraIcon } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { Button } from "@/components/ui/button";
 
 
 const ProductDetailsPage = () => {
@@ -49,23 +50,29 @@ const ProductDetailsPage = () => {
     return (
         <div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col pl-1 pb-2 text-slate-500">
-                    <h2 className="text-2xl font-semibold">{productDetails.name}</h2>
-                    <span>by: {productDetails.provider_name}</span>
+                <div className="flex py-12 pl-1 bg-white items-center sticky top-24">
+                    <div className="flex-col flex-1 text-slate-500">
+                        <h2 className="text-2xl font-semibold">{productDetails.name}</h2>
+                        <span>by: {productDetails.provider_name}</span>
+                    </div>
+                    <Button color="primary" className="text-white px-8">
+                        <CalendarPlusIcon className="w-6 h-6 mr-2" />
+                        <span className="text-md font-semibold text-white">AGENDAR</span>
+                    </Button>
                 </div>
                 <div className="flex">
-                    <div className="w-full min-h-[700px] md:min-h-[600px] flex-col md:flex-row flex gap-2">
+                    <div className="w-full min-h-[700px] md:min-h-[600px] flex-col md:flex-row flex gap-2 text-white font-bold text-2xl">
                         
                         <div className="w-full md:w-6/12 h-full">
-                            <div className="w-full h-[400px] md:h-full bg-slate-300 flex items-center justify-center rounded-t-xl lg:rounded-l-xl md:rounded-tr-none">
-                                Main foto
+                            <div className="w-full h-[400px] md:h-full bg-slate-300 hover:bg-slate-500 flex items-center justify-center rounded-t-xl lg:rounded-l-xl md:rounded-tr-none transition-all ease-in">
+                                <CameraIcon className="h-12 w-12" />
                             </div>
                         </div>  
                         <div className="w-full md:w-6/12 flex flex-wrap h-full gap-2">
-                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 flex items-center justify-center">1</div>
-                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 flex items-center justify-center md:rounded-tr-xl">2</div>
-                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 flex items-center justify-center rounded-bl-xl md:rounded-bl-none">3</div>
-                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 flex items-center justify-center rounded-br-xl">4</div>
+                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 hover:bg-slate-500 flex items-center justify-center transition-all ease-in"><CameraIcon className="h-12 w-12" /></div>
+                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 hover:bg-slate-500 flex items-center justify-center md:rounded-tr-xl transition-all ease-in"><CameraIcon className="h-12 w-12" /></div>
+                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 hover:bg-slate-500 flex items-center justify-center rounded-bl-xl md:rounded-bl-none transition-all ease-in"><CameraIcon className="h-12 w-12" /></div>
+                            <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 hover:bg-slate-500 flex items-center justify-center rounded-br-xl transition-all ease-in"><CameraIcon className="h-12 w-12" /></div>
                         </div>
                     </div>
                     {/* <div className="flex-1 px-4">

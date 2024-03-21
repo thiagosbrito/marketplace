@@ -6,7 +6,8 @@ import { Toaster } from "sonner";
 import { usePathname } from "next/navigation";
 
 const PageWrapper = ({ children }: { children: ReactNode}) => {
-    const is_admin = usePathname().includes('/admin');
+    const pathname = usePathname();
+    const is_admin = pathname.includes('/admin') || pathname.includes('/dashboard');
     return (
         <>   
             {is_admin ? null : (
