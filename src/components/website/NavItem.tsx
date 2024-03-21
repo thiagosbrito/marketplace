@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Minus, Plus } from "lucide-react";
 import { cn, formatImageURL } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,11 +47,12 @@ const NavItem = ({isAnyOpen, category, handleOpen, isOpen}: NavItemProps) => {
 
   return <div className="flex">
     <div className="relative flex items-center">
-      <Button className="gap-1.5" onClick={handleOpen} variant={isOpen ? 'secondary' : 'ghost'}>
-        {category.name}
-        <ChevronDown className={cn("h-4 w-4 transition-all text-muted-foreground", {
-          "-rotate-180" : isOpen
-        })}></ChevronDown>
+      <Button className="gap-3 text-md antialiased font-light" onClick={handleOpen} variant={isOpen ? 'secondary' : 'ghost'}>
+        <span>{category.name}</span>
+        {isOpen ? 
+          <Minus className="h-4 w-4 transition-all text-muted-foreground" /> : 
+          <Plus className="h-4 w-4 transition-all text-muted-foreground" />
+        }
       </Button>
     </div>
     {isOpen ? (

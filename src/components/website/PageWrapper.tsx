@@ -10,7 +10,7 @@ const PageWrapper = ({ children }: { children: ReactNode}) => {
     const is_admin = pathname.includes('/admin') || pathname.includes('/dashboard');
     return (
         <>   
-            {is_admin ? null : (
+            {is_admin || ['/sign-in', '/sign-up', '/verify-email'].includes(pathname) ? null : (
                 <Navbar />
             )}
             <main className="relative flex flex-col min-h-screen">

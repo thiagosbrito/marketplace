@@ -7,13 +7,14 @@ import { formatPrice } from "@/lib/utils";
 import ProductImageCarousel from "@/components/website/ProductImageCarousel";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, Star, HelpCircle, CalendarPlusIcon, CameraIcon } from "lucide-react";
+import { Info, Star, HelpCircle, CalendarPlusIcon, CameraIcon, HeartIcon, Heart, Share } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 
 
 const ProductDetailsPage = () => {
     const productSlug = useParams().product as string;
+    const [isHovered, setIsHovered] = useState(false);
     const [productDetails, setProductDetails] = useState<{
         name: string;
         price: number;
@@ -33,20 +34,15 @@ const ProductDetailsPage = () => {
 
     useEffect(() => {
         if (isSuccess) {
+            console.log(data);
             setProductDetails(data);
         }
     }, [isSuccess, data])
     
-    
-
-    // useEffect(() => {
-    //     if (productSlug) {
-    //         const query = PRODUCT_DETAILS.replace("${slug}", productSlug as string);
-    //         client.fetch(query).then(product => setProductDetails(product));
-    //     }
-    // }, [productSlug]);
     if (isLoading) return <p>Loading...</p>;
+
     if (productDetails === null) return <p>Product not found</p>;
+
     return (
         <div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,10 +51,20 @@ const ProductDetailsPage = () => {
                         <h2 className="text-2xl font-semibold">{productDetails.name}</h2>
                         <span>by: {productDetails.provider_name}</span>
                     </div>
-                    <Button color="primary" className="text-white px-8">
-                        <CalendarPlusIcon className="w-6 h-6 mr-2" />
-                        <span className="text-md font-semibold text-white">AGENDAR</span>
-                    </Button>
+                    <div className="actions flex gap-4 items-center">
+                        <Share className="h-6 w-6 text-slate-500 cursor-pointer hover:text-slate-700 active:text-slate-900" />
+                        <Heart
+                            className="h-6 w-6 text-red-500 cursor-pointer" 
+                            color={isHovered ? "#8A053C" : "#EC0868"}
+                            fill={isHovered ? "#8A053C" : "none"}
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                        />
+                        <Button color="primary" className="text-white px-8">
+                            <CalendarPlusIcon className="w-6 h-6 mr-2" />
+                            <span className="text-md font-semibold text-white">AGENDAR</span>
+                        </Button>
+                    </div>
                 </div>
                 <div className="flex">
                     <div className="w-full min-h-[700px] md:min-h-[600px] flex-col md:flex-row flex gap-2 text-white font-bold text-2xl">
@@ -75,91 +81,74 @@ const ProductDetailsPage = () => {
                             <div className="w-[calc(50%-4px)] h-[calc(50%-4px)] bg-slate-300 hover:bg-slate-500 flex items-center justify-center rounded-br-xl transition-all ease-in"><CameraIcon className="h-12 w-12" /></div>
                         </div>
                     </div>
-                    {/* <div className="flex-1 px-4">
-                        <ProductImageCarousel gallery={productDetails.gallery} />
-                    </div>
-                    <div className="top-20 px-4 sticky">
-                        <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                            {productDetails.name}
-                        </h2>
-                        <p className="text-gray-500 text-sm">
-                            By{" "}
-                            <a href="#" className="text-indigo-600 hover:underline">
-                                {productDetails.provider_name}
-                            </a>
-                        </p>
-                        <div className="flex items-center space-x-4 my-4">
-                            <div>
-                                <div className="rounded-lg bg-gray-100 flex py-2 px-3">
-                                    <span className="text-indigo-400 mr-1 mt-1">R$</span>
-                                    <span className="font-bold text-indigo-600 text-3xl">{formatPrice(productDetails.price).replace('R$', '')}</span>
-                                </div>
-                            </div>
-                            <div className="flex-1">
-                                <p className="text-green-500 text-xl font-semibold">Save 12%</p>
-                                <p className="text-gray-400 text-sm">Inclusive of all Taxes.</p>
-                            </div>
-                        </div>
-                        <div className="flex py-4 space-x-4">
-                            <div className="relative">
-                                <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
-                                    Qty
-                                </div>
-                                <select className="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                                <svg className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                    />
-                                </svg>
-                            </div>
-                            <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div> */}
                 </div>
             </div>
-            <section className="product-information max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <Tabs defaultValue="description" className="w-full">
-                    <TabsList>
-                        <TabsTrigger value="description" className="flex text-muted-foreground gap-2">
-                            <Info className="w-4 h-4" />
-                            <span>Description</span>
-                        </TabsTrigger>
-                        <TabsTrigger value="reviews" className="flex text-muted-foreground gap-2">
-                            <Star className="w-4 h-4" />
-                            <span>Reviews</span>
-                        </TabsTrigger>
-                        <TabsTrigger value="faq" className="flex text-muted-foreground gap-2">
-                            <HelpCircle className="w-4 h-4" />
-                            <span>F.A.Q</span>
-                        </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="description">
-                        <div className="max-w-7xl py-6 px-4">
-                            <ReactMarkdown>
-                                {productDetails.description}
-                            </ReactMarkdown>
+            <section className="product-information grid grid-cols-3 gap-4 max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div className="col-span-2">
+                    <h3 className="text-2xl font-bold text-muted-foreground border-b border-solid pb-4 my-4">Descrição</h3>
+
+                    <ReactMarkdown className="text-slate-500 whitespace-pre-wrap">
+                        {productDetails.description}
+                    </ReactMarkdown>
+
+                    <h3 className="text-2xl font-bold text-muted-foreground border-b border-solid pb-4 my-4">Descrição</h3>
+
+                    <ReactMarkdown className="text-slate-500 whitespace-pre-wrap">
+                        {productDetails.description}
+                    </ReactMarkdown>
+                </div>
+                <div>
+                    <div className="flex bg-slate-50 rounded-xl min-h-[300px] py-6 px-4 border border-solid border-slate-300 sticky top-30">
+                        <div className="book p-2 flex flex-col items-center w-full">
+                            <h3 className="text-left w-full text-2xl font-bold mb-4">R$ 800,00</h3>
+                            <div className="date-and-infos border border-solid w-full border-slate-300 rounded-lg py-4">
+                                <div className="date flex pb-4 px-2 gap-2">
+                                    <span className="text-muted-foreground">Data:</span>
+                                    <span className="text-slate-500 ml-auto">12/12/2022</span>
+                                </div>
+                                <div className="time border-t border-solid border-slate-300 px-2 pt-4 flex gap-2">
+                                    <span className="text-muted-foreground">Horário:</span>
+                                    <span className="text-slate-500 ml-auto">12:00</span>
+                                </div>
+                            </div>
+                            <Button className="w-full p-6 my-4 bg-gradient-to-r from-slate-900 to-slate-700 text-slate-200 font-bold">
+                                <CalendarPlusIcon className="w-6 h-6 mr-2" />
+                                Reservar essa data
+                            </Button>
                         </div>
-                    </TabsContent>
-                    <TabsContent value="reviews">Reviews Content</TabsContent>
-                    <TabsContent value="faq">FAQ Content</TabsContent>
-                </Tabs>
+                        <div className="summary">
+
+                        </div>
+                    </div>
+                </div>
+                <div className="col-span-3 grid grid-cols-2 gap-4">
+                    <div className="bg-slate-300 min-h-[400px] rounded-lg flex items-center justify-center text-white font-bold">
+                        1
+                    </div>
+                    <div className="bg-slate-300 min-h-[400px] rounded-lg flex items-center justify-center text-white font-bold">
+                        2
+                    </div>
+                </div>
+
+                <div className="col-span-3">
+                    <h3 className="text-2xl font-bold text-muted-foreground border-b border-solid pb-4 my-4">Descrição</h3>
+
+                    <ReactMarkdown className="text-slate-500 whitespace-pre-wrap">
+                        {productDetails.description}
+                    </ReactMarkdown>
+                </div>
+
+                <div className="col-span-3 grid grid-cols-2 gap-4">
+                    <div className="bg-slate-300 min-h-[400px] rounded-lg flex items-center justify-center text-white font-bold">
+                        1
+                    </div>
+                    <div className="bg-slate-300 min-h-[400px] rounded-lg flex items-center justify-center text-white font-bold">
+                        2
+                    </div>
+                </div>
             </section>
+            
+            
         </div>
     );
 }
